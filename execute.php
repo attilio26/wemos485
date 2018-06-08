@@ -1,5 +1,5 @@
 <?php
-//08-06-2018
+//23-02-2018
 //started on 01-06-2017
 // La app di Heroku si puo richiamare da browser con
 //			https://wemos485.herokuapp.com/
@@ -57,22 +57,11 @@ $response = '';
 
 // Note our use of ===.  Simply == would not work as expected
 // because the position of '/' was the 0th (first) character
-if(strpos($text, "/start") === 0 || $text=="inf" || $text == "help"){
-	$response = "Ciao $firstname, benvenuto! \n List of commands : 
-	/bed  -> Lettura stazione1
-	/din  -> Lettura stazione2  
-	/kitc -> Lettura stazione3
-	/livg -> Lettura stazione4 
-	/boil -> Lettura stazione5
-  /off  -> Spegne tutti i rele	... su bus RS485  \n
-	/fsh1 -> Lampada Pesci ON  \n /fsh0 -> Lampada Pesci OFF
-	/lob1  -> Lampada Atrio ON  \n /lob0  -> Lampada Atrio OFF
-	/bth1 -> Lamp garden ON \n /bth0 -> Lamp garden OFF
-	/blc1 -> Lampada veranda ON  \n /blc0 -> Lampada veranda OFF
-	/ent1 -> Lampada ingresso ON  \n /ent0 -> Lampada ingresso OFF
-	/1bth -> Lampade Lina ON \n /0bth -> Lampade Lina OFF
-	/inf -> parametri del messaggio \n
-	chatId ".$chatId. "\n messId ".$messageId. "\n user ".$username. "\n lastname ".$lastname. "\n firstname ".$firstname ;		
+if(strpos($text, "/start") === 0 || $text=="ciao" || $text == "help"){
+	$response = "Ciao $firstname, benvenuto! \n List of commands : \n /bed -> Lettura stazione1
+	/lunch -> Lettura stazione2  \n /kitch -> Lettura stazione3
+	/livg -> Lettura stazione4 \n /boil  -> Lettura stazione5 ... su bus RS485
+	/inf -> parametri del messaggio";
 }
 //------------
 //<-- Lettura parametri slave1
@@ -80,11 +69,11 @@ elseif(strpos($text,"bed")){
 	$response = file_get_contents("http://dario95.ddns.net:8083/letto");
 }
 //<-- Lettura parametri slave2
-elseif(strpos($text,"din")){
+elseif(strpos($text,"lunch")){
 	$response = file_get_contents("http://dario95.ddns.net:8083/pranzo");
 }
 //<-- Lettura parametri slave3
-elseif(strpos($text,"kitc")){
+elseif(strpos($text,"kitch")){
 	$response = file_get_contents("http://dario95.ddns.net:8083/cucina");
 }
 //<-- Lettura parametri slave4
@@ -95,18 +84,13 @@ elseif(strpos($text,"livg")){
 elseif(strpos($text,"boil")){
 	$response = file_get_contents("http://dario95.ddns.net:8083/caldaia");
 }
-//<-- Rele degli slaves tutti a riposo
-elseif(strpos($text,"off")){
-	$response = file_get_contents("http://dario95.ddns.net:8083/rele/0/0");
-}
-
 //------------
 //<-- Accensione rele1 su ESP01_lamp  	Cambiata la porta del router dopo tentativi da 8082  31/10/2017
-elseif(strpos($text,"fsh1")){
+elseif(strpos($text,"fish1")){
 	$response = file_get_contents("http://dario95.ddns.net:28082/gpio1/1");
 }
 //<-- Spegnimento rele1 su ESP01_lamp	Cambiata la porta del router dopo tentativi da 8082  31/10/2017
-elseif(strpos($text,"fsh0")){
+elseif(strpos($text,"fish0")){
 	$response = file_get_contents("http://dario95.ddns.net:28082/gpio1/0");
 }
 //<-- Accensione rele2 su ESP01_lamp	Cambiata la porta del router dopo tentativi da 8082  31/10/2017
@@ -116,38 +100,23 @@ elseif(strpos($text,"lob1")){
 //<-- Spegnimento rele2 su ESP01_lamp	Cambiata la porta del router dopo tentativi da 8082  31/10/2017
 elseif(strpos($text,"lob0")){
 	$response = file_get_contents("http://dario95.ddns.net:28082/gpio2/0");
-//<-- Accensione rele1 + rele2 su ESP01_lamp	 
-elseif(strpos($text,"bth1")){
-	$response = file_get_contents("http://dario95.ddns.net:28082/gpio3/1");
-}
-//<-- Spegnimento rele1 + rele2 su ESP01_lamp	 
-elseif(strpos($text,"bth0")){
-	$response = file_get_contents("http://dario95.ddns.net:28082/gpio3/0");
 }
 //------------
 //<-- Accensione rele1 su ESPlogger	Cambiata la porta del router dopo tentativi da 8081  31/10/2017
-elseif(strpos($text,"blc1")){
+elseif(strpos($text,"balc1")){
 	$response = file_get_contents("http://dario95.ddns.net:28081?pin=10");
 }
 //<-- Spegnimento rele1 su ESPlogger	Cambiata la porta del router dopo tentativi da 8081  31/10/2017
-elseif(strpos($text,"blc0")){
+elseif(strpos($text,"balc0")){
 	$response = file_get_contents("http://dario95.ddns.net:28081?pin=11");
 }
 //<-- Accensione rele2 su ESPlogger	Cambiata la porta del router dopo tentativi da 8081  31/10/2017
-elseif(strpos($text,"ent1")){
+elseif(strpos($text,"entr1")){
 	$response = file_get_contents("http://dario95.ddns.net:28081?pin=12");
 }
 //<-- Spegnimento rele2 su ESPlogger	Cambiata la porta del router dopo tentativi da 8081  31/10/2017
-elseif(strpos($text,"ent0")){
+elseif(strpos($text,"entr0")){
 	$response = file_get_contents("http://dario95.ddns.net:28081?pin=13");
-}
-//<-- Accensione rele2 + rele1 su ESPlogger	
-elseif(strpos($text,"1bth")){
-	$response = file_get_contents("http://dario95.ddns.net:28081?pin=30");
-}
-//<-- Spegnimento rele2 + rele1 su ESPlogger	
-elseif(strpos($text,"0bth")){
-	$response = file_get_contents("http://dario95.ddns.net:28081?pin=31");
 }
 
 //<-- Manda a video la risposta completa
@@ -167,7 +136,7 @@ else
 $parameters = array('chat_id' => $chatId, "text" => $response);
 $parameters["method"] = "sendMessage";
 // imposto la keyboard
-$parameters["reply_markup"] = '{ "keyboard": [["/bed","/din","/kitc","/livg","/boil","/off"],["/fsh1","/fsh0","/lob1","/lob0","/bth1","/bth0"],["/blc1","/blc0","/ent1","/ent0","/1bth","/0bth","inf"]], "one_time_keyboard": false}';
+$parameters["reply_markup"] = '{ "keyboard": [["/bed", "/lunch","/kitch","/livg","/boil"],["/fish1","/fish0","/lob1","/lob0"],["/balc1","/balc0","/entr1","/entr0","/inf"]], "one_time_keyboard": false}';
 // converto e stampo l'array JSON sulla response
 echo json_encode($parameters);
 ?>
