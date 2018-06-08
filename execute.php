@@ -3,18 +3,13 @@
 //started on 01-06-2017
 // La app di Heroku si puo richiamare da browser con
 //			https://wemos485.herokuapp.com/
-
-
 /*API key = 315635925:AAFHPIBs9_aGXqv2_IBQPVJWYcAFM-tWsWU
-
 da browser request ->   https://wemos485.herokuapp.com/register.php
            answer  <-   {"ok":true,"result":true,"description":"Webhook is already set"}
 In questo modo invocheremo lo script register.php che ha lo scopo di comunicare a Telegram
 l’indirizzo dell’applicazione web che risponderà alle richieste del bot.
-
 da browser request ->   https://api.telegram.org/bot315635925:AAFHPIBs9_aGXqv2_IBQPVJWYcAFM-tWsWU/getMe
            answer  <-   {"ok":true,"result":{"id":315635925,"first_name":"wemos485","username":"wemos485_bot"}}
-
 *********
 	https://wemos485.herokuapp.com/register.php
 											è questo che permette a Telegram di essere linkato a Heroku 
@@ -24,18 +19,14 @@ da browser request ->   https://api.telegram.org/bot315635925:AAFHPIBs9_aGXqv2_I
 riferimenti:
 https://gist.github.com/salvatorecordiano/2fd5f4ece35e75ab29b49316e6b6a273
 https://www.salvatorecordiano.it/creare-un-bot-telegram-guida-passo-passo/
-
 --- http://www.andreaminini.com/telegram/come-pubblicare-automaticamente-su-telegram-tramite-ifttt
-
 */
 $content = file_get_contents("php://input");
 $update = json_decode($content, true);
-
 if(!$update)
 {
   exit;
 }
-
 $message = isset($update['message']) ? $update['message'] : "";
 $messageId = isset($message['message_id']) ? $message['message_id'] : "";
 $chatId = isset($message['chat']['id']) ? $message['chat']['id'] : "";
@@ -44,24 +35,31 @@ $lastname = isset($message['chat']['last_name']) ? $message['chat']['last_name']
 $username = isset($message['chat']['username']) ? $message['chat']['username'] : "";
 $date = isset($message['date']) ? $message['date'] : "";
 $text = isset($message['text']) ? $message['text'] : "";
-
 // pulisco il messaggio ricevuto togliendo eventuali spazi prima e dopo il testo
 $text = trim($text);
 // converto tutti i caratteri alfanumerici del messaggio in minuscolo
 $text = strtolower($text);
-
 header("Content-Type: application/json");
-
 //ATTENZIONE!... Tutti i testi e i COMANDI contengono SOLO lettere minuscole
 $response = '';
-
 // Note our use of ===.  Simply == would not work as expected
 // because the position of '/' was the 0th (first) character
-if(strpos($text, "/start") === 0 || $text=="ciao" || $text == "help"){
-	$response = "Ciao $firstname, benvenuto! \n List of commands : \n /bed -> Lettura stazione1
-	/lunch -> Lettura stazione2  \n /kitch -> Lettura stazione3
-	/livg -> Lettura stazione4 \n /boil  -> Lettura stazione5 ... su bus RS485
-	/inf -> parametri del messaggio";
+if(strpos($text, "/start") === 0 || $text=="/inf" || $text == "help"){
+	$response = "Ciao $firstname, benvenuto! \n List of commands : 
+	/bed  -> Lettura stazione1
+	/din  -> Lettura stazione2  
+	/kitc -> Lettura stazione3
+	/livg -> Lettura stazione4 
+	/boil -> Lettura stazione5
+  /off  -> Spegne tutti i rele	... su bus RS485  \n
+	/fsh1 -> Lampada Pesci ON  \n /fsh0 -> Lampada Pesci OFF
+	/lob1  -> Lampada Atrio ON  \n /lob0  -> Lampada Atrio OFF
+	/bth1 -> Lamp garden ON \n /bth0 -> Lamp garden OFF
+	/blc1 -> Lampada veranda ON  \n /blc0 -> Lampada veranda OFF
+	/ent1 -> Lampada ingresso ON  \n /ent0 -> Lampada ingresso OFF
+	/1bth -> Lampade Lina ON \n /0bth -> Lampade Lina OFF
+	/inf -> parametri del messaggio \n
+	chatId ".$chatId. "\n messId ".$messageId. "\n user ".$username. "\n lastname ".$lastname. "\n firstname ".$firstname ;		
 }
 //------------
 //<-- Lettura parametri slave1
@@ -118,7 +116,6 @@ elseif(strpos($text,"entr1")){
 elseif(strpos($text,"entr0")){
 	$response = file_get_contents("http://dario95.ddns.net:28081?pin=13");
 }
-
 //<-- Manda a video la risposta completa
 elseif($text=="/inf"){
 //	$response = "chatId ".$chatId. "   messId ".$messageId. "  user ".$username. "   lastname ".$lastname. "   firstname ".$firstname. "   ".
@@ -129,7 +126,6 @@ else
 {
 	$response = "Unknown command!";			//<---Capita quando i comandi contengono lettere maiuscole
 }
-
 // la mia risposta è un array JSON composto da chat_id, text, method
 // chat_id mi consente di rispondere allo specifico utente che ha scritto al bot
 // text è il testo della risposta
