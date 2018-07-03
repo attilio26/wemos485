@@ -1,5 +1,5 @@
 <?php
-//23-02-2018
+//03-07-2018
 //started on 01-06-2017
 // La app di Heroku si puo richiamare da browser con
 //			https://wemos485.herokuapp.com/
@@ -48,12 +48,13 @@ if(strpos($text, "/start") === 0 || $text=="/inf" || $text == "help"){
 	$response = "Ciao $firstname, benvenuto! \n List of commands : 
 	/bed  -> Lettura stazione1
 	/din  -> Lettura stazione2  
-	/kitc -> Lettura stazione3
-	/livg -> Lettura stazione4 
-	/boil -> Lettura stazione5
+	/ktc 	-> Lettura stazione3
+	/lvg 	-> Lettura stazione4 
+	/blr 	-> Lettura stazione5
+	/hpg	-> Lettura stazione6
   /off  -> Spegne tutti i rele	... su bus RS485  \n
 	/fsh1 -> Lampada Pesci ON  \n /fsh0 -> Lampada Pesci OFF
-	/lob1  -> Lampada Atrio ON  \n /lob0  -> Lampada Atrio OFF
+	/lob1 -> Lampada Atrio ON  \n /lob0  -> Lampada Atrio OFF
 	/bth1 -> Lamp garden ON \n /bth0 -> Lamp garden OFF \n
 	/blc1 -> Lampada veranda ON  \n /blc0 -> Lampada veranda OFF
 	/ent1 -> Lampada ingresso ON  \n /ent0 -> Lampada ingresso OFF
@@ -71,16 +72,20 @@ elseif(strpos($text,"din")){
 	$response = file_get_contents("http://dario95.ddns.net:8083/pranzo");
 }
 //<-- Lettura parametri slave3
-elseif(strpos($text,"kitc")){
+elseif(strpos($text,"ktc")){
 	$response = file_get_contents("http://dario95.ddns.net:8083/cucina");
 }
 //<-- Lettura parametri slave4
-elseif(strpos($text,"livg")){
+elseif(strpos($text,"lvg")){
 	$response = file_get_contents("http://dario95.ddns.net:8083/salotto");
 }
 //<-- Lettura parametri slave5
-elseif(strpos($text,"boil")){
+elseif(strpos($text,"blr")){
 	$response = file_get_contents("http://dario95.ddns.net:8083/caldaia");
+}
+//<-- Lettura parametri slave6
+elseif(strpos($text,"hpg")){
+	$response = file_get_contents("http://dario95.ddns.net:8083/heatplug");
 }
 //<-- Rele degli slaves tutti a riposo
 elseif(strpos($text,"off")){
@@ -153,7 +158,7 @@ else
 $parameters = array('chat_id' => $chatId, "text" => $response);
 $parameters["method"] = "sendMessage";
 // imposto la keyboard
-$parameters["reply_markup"] = '{ "keyboard": [["/bed","/din","/kitc","/livg","/boil","/off"],["/fsh1","/fsh0","/lob1","/lob0","/bth1","/bth0"],["/blc1","/blc0","/ent1","/ent0","/1bth","/0bth","/inf"]], "one_time_keyboard": false}';
+$parameters["reply_markup"] = '{ "keyboard": [["/bed","/din","/ktc","/lvg","/blr","/hpg","/off"],["/fsh1","/fsh0","/lob1","/lob0","/bth1","/bth0"],["/blc1","/blc0","/ent1","/ent0","/1bth","/0bth","/inf"]], "one_time_keyboard": false}';
 // converto e stampo l'array JSON sulla response
 echo json_encode($parameters);
 ?>
