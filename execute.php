@@ -151,9 +151,7 @@ elseif($text=="/inf"){
 }
 //<-- collegamento a web server locale RASPI2
 elseif(strpos($text,"raspi")){
-	//$response = file_get_contents("http://dario95.ddns.net:9080");
-	$response = header("Location: http://dario95.ddns.net:9080");
-	exit;
+	$response = file_get_contents("http://dario95.ddns.net:9080");
 }
 else
 {
