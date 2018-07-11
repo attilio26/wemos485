@@ -151,9 +151,10 @@ elseif($text=="/inf"){
 }
 //<-- collegamento a web server locale RASPI2
 elseif(strpos($text,"raspi")){
-	$response = file_get_contents("http://dario95.ddns.net:9080");
+	//$response = file_get_contents("http://dario95.ddns.net:9080");
+	header("Location: http://dario95.ddns.net:9080");
+	exit;
 }
-
 else
 {
 	$response = "Unknown command!";			//<---Capita quando i comandi contengono lettere maiuscole
@@ -165,9 +166,6 @@ $parameters = array('chat_id' => $chatId, "text" => $response);
 $parameters["method"] = "sendMessage";
 //   	ReplyKeyboardMarkup     imposto la keyboard
 $parameters["reply_markup"] = '{ "keyboard": [["/bed","/din","/ktc","/lvg","/blr","/hpg","/off"],["/fsh1","/fsh0","/lob1","/lob0","/bth1","/bth0"],["/blc1","/blc0","/ent1","/ent0","/1bth","/0bth"],["/raspi","/inf"]], "resize_keyboard": true, "one_time_keyboard": false}';
-//		InlineKeyboardMarkup
-$parameters["inline_markup"] = '{ "text": ["/raspi"], "url":["http://dario95.ddns.net:9080"]}';
-
 // converto e stampo l'array JSON sulla response
 echo json_encode($parameters);
 ?>
