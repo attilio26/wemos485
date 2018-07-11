@@ -1,5 +1,5 @@
 <?php
-//03-07-2018
+//11-07-2018
 //started on 01-06-2017
 // La app di Heroku si puo richiamare da browser con
 //			https://wemos485.herokuapp.com/
@@ -158,7 +158,7 @@ else
 $parameters = array('chat_id' => $chatId, "text" => $response);
 $parameters["method"] = "sendMessage";
 // imposto la keyboard
-$parameters["reply_markup"] = '{ "keyboard": [["/bed","/din","/ktc","/lvg","/blr","/hpg","/off"],["/fsh1","/fsh0","/lob1","/lob0","/bth1","/bth0"],["/blc1","/blc0","/ent1","/ent0","/1bth","/0bth","/inf"]], "one_time_keyboard": false}';
+$parameters["reply_markup"] = '{ "keyboard": [["/bed","/din","/ktc","/lvg","/blr","/hpg","/off"],["/fsh1","/fsh0","/lob1","/lob0","/bth1","/bth0"],["/blc1","/blc0","/ent1","/ent0","/1bth","/0bth","/inf"]], "resize_keyboard": true, "one_time_keyboard": false}';
 // converto e stampo l'array JSON sulla response
 echo json_encode($parameters);
 ?>
