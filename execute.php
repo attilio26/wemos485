@@ -152,11 +152,11 @@ elseif($text=="/inf"){
 }
 //<-- collegamento a web server locale RASPI2
 elseif(strpos($text,"raspi")){
-	$response = file_get_contents("http://dario95.ddns.net:9080/link.php");
+	$response = file_get_contents("http://dario95.ddns.net:9080/link.html");
 }
 //<-- indirizzo di rete attuale
 elseif(strpos($text,"/myip")){
-	$response = file_get_contents("http://ip.42.pl/raw");
+	$response = file_get_contents("http://ip.42.pl");
 }
 else
 {
