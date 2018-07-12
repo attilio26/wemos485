@@ -60,6 +60,7 @@ if(strpos($text, "/start") === 0 || $text=="/inf" || $text == "help"){
 	/ent1 -> Lampada ingresso ON  \n /ent0 -> Lampada ingresso OFF
 	/1bth -> Lampade Lina ON \n /0bth -> Lampade Lina OFF
 	/raspi-> RASPI webServer
+	/myip	->	Indirizzo di rete attuale
 	/inf -> parametri del messaggio \n
 	chatId ".$chatId. "\n messId ".$messageId. "\n user ".$username. "\n lastname ".$lastname. "\n firstname ".$firstname ;		
 }
@@ -153,6 +154,11 @@ elseif($text=="/inf"){
 elseif(strpos($text,"raspi")){
 	$response = file_get_contents("http://dario95.ddns.net:9080");
 }
+//<-- indirizzo di rete attuale
+elseif(strpos($text,"/myip")){
+	$ch = curl_init("http://ip.42.pl/raw");
+	$response = curl_exec($ch); #get dell'IP
+}
 else
 {
 	$response = "Unknown command!";			//<---Capita quando i comandi contengono lettere maiuscole
@@ -163,7 +169,13 @@ else
 $parameters = array('chat_id' => $chatId, "text" => $response);
 $parameters["method"] = "sendMessage";
 //   	ReplyKeyboardMarkup     imposto la keyboard
-$parameters["reply_markup"] = '{ "keyboard": [["/bed","/din","/ktc","/lvg","/blr","/hpg","/off"],["/fsh1","/fsh0","/lob1","/lob0","/bth1","/bth0"],["/blc1","/blc0","/ent1","/ent0","/1bth","/0bth"],["/raspi","/inf"]], "resize_keyboard": true, "one_time_keyboard": false}';
+$parameters["reply_markup"] = '{ "keyboard": [
+	["/bed","/din","/ktc","/lvg","/blr","/hpg","/off"],
+	["/fsh1","/fsh0","/lob1","/lob0","/bth1","/bth0"],
+	["/blc1","/blc0","/ent1","/ent0","/1bth","/0bth"],
+	["/raspi","/inf","/myip"]], 
+	"resize_keyboard": true, 
+	"one_time_keyboard": false}';
 // converto e stampo l'array JSON sulla response
 echo json_encode($parameters);
 ?>
