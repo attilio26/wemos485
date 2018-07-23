@@ -59,9 +59,10 @@ if(strpos($text, "/start") === 0 || $text=="/inf" || $text == "help"){
 	/blc1 -> Lampada veranda ON  \n /blc0 -> Lampada veranda OFF
 	/ent1 -> Lampada ingresso ON  \n /ent0 -> Lampada ingresso OFF
 	/1bth -> Lampade Lina ON \n /0bth -> Lampade Lina OFF
-	/raspi-> RASPI webServer
+	/rasp -> RASPI webServer
 	/myip	-> Indirizzo di rete attuale
-	/site -> farinemill web site
+	/000  -> farinemill web site
+	/altr -> altervista website
 	/inf -> parametri del messaggio \n
 	chatId ".$chatId. "\n messId ".$messageId. "\n user ".$username. "\n lastname ".$lastname. "\n firstname ".$firstname ;		
 }
@@ -152,12 +153,16 @@ elseif($text=="/inf"){
 	$response = file_get_contents("http://dario95.ddns.net:28081?");
 }
 //<-- collegamento a web server locale RASPI2
-elseif(strpos($text,"raspi")){
+elseif(strpos($text,"rasp")){
 	$response = file_get_contents("http://dario95.ddns.net:9080/link.html");
 }
-//<-- collegamento a web hosting 
-elseif(strpos($text,"site")){
+//<-- collegamento a web hosting farinemill.000webhostapp.com
+elseif(strpos($text,"000")){
 	$response = file_get_contents("http://dario95.ddns.net:9080/link000.html");
+}
+//<-- collegamento a web hosting attilio26.altervista.org
+elseif(strpos($text,"altr")){
+	$response = file_get_contents("http://dario95.ddns.net:9080/link_altervista.html");
 }
 //<-- indirizzo di rete attuale
 elseif(strpos($text,"/myip")){
@@ -177,7 +182,7 @@ $parameters["reply_markup"] = '{ "keyboard": [
 	["/bed","/din","/ktc","/lvg","/blr","/hpg","/off"],
 	["/fsh1","/fsh0","/lob1","/lob0","/bth1","/bth0"],
 	["/blc1","/blc0","/ent1","/ent0","/1bth","/0bth"],
-	["/raspi","/site","/inf","/myip"]], 
+	["/rasp","/000","/altr","/inf","/myip"]], 
 	"resize_keyboard": true, 
 	"one_time_keyboard": false}';
 // converto e stampo l'array JSON sulla response
