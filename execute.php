@@ -157,7 +157,7 @@ elseif(strpos($text,"raspi")){
 }
 //<-- collegamento a web hosting 
 elseif(strpos($text,"site")){
-	$response = file_get_contents("http://farinemill.000webhostapp.com");
+	$response = file_get_contents("http://dario95.ddns.net:9080/link000.html");
 }
 //<-- indirizzo di rete attuale
 elseif(strpos($text,"/myip")){
