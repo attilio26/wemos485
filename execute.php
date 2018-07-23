@@ -1,5 +1,5 @@
 <?php
-//11-07-2018
+//23-07-2018
 //started on 01-06-2017
 // La app di Heroku si puo richiamare da browser con
 //			https://wemos485.herokuapp.com/
@@ -60,7 +60,8 @@ if(strpos($text, "/start") === 0 || $text=="/inf" || $text == "help"){
 	/ent1 -> Lampada ingresso ON  \n /ent0 -> Lampada ingresso OFF
 	/1bth -> Lampade Lina ON \n /0bth -> Lampade Lina OFF
 	/raspi-> RASPI webServer
-	/myip	->	Indirizzo di rete attuale
+	/myip	-> Indirizzo di rete attuale
+	/site -> farinemill web site
 	/inf -> parametri del messaggio \n
 	chatId ".$chatId. "\n messId ".$messageId. "\n user ".$username. "\n lastname ".$lastname. "\n firstname ".$firstname ;		
 }
@@ -154,6 +155,10 @@ elseif($text=="/inf"){
 elseif(strpos($text,"raspi")){
 	$response = file_get_contents("http://dario95.ddns.net:9080/link.html");
 }
+//<-- collegamento a web hosting 
+elseif(strpos($text,"site")){
+	$response = file_get_contents("http://farinemill.000webhostapp.com");
+}
 //<-- indirizzo di rete attuale
 elseif(strpos($text,"/myip")){
 	$response = file_get_contents("http://ip.42.pl");
@@ -172,7 +177,7 @@ $parameters["reply_markup"] = '{ "keyboard": [
 	["/bed","/din","/ktc","/lvg","/blr","/hpg","/off"],
 	["/fsh1","/fsh0","/lob1","/lob0","/bth1","/bth0"],
 	["/blc1","/blc0","/ent1","/ent0","/1bth","/0bth"],
-	["/raspi","/inf","/myip"]], 
+	["/raspi","/site","/inf","/myip"]], 
 	"resize_keyboard": true, 
 	"one_time_keyboard": false}';
 // converto e stampo l'array JSON sulla response
