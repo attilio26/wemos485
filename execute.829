@@ -56,8 +56,8 @@ if(strpos($text, "/start") === 0 || $text=="/inf" || $text == "help"){
 	/fsh1 -> Lampada Pesci ON  \n /fsh0 -> Lampada Pesci OFF
 	/lob1 -> Lampada Atrio ON  \n /lob0  -> Lampada Atrio OFF
 	/bth1 -> Lamp garden ON \n /bth0 -> Lamp garden OFF \n
-	/i1_e0 -> Lampada veranda OFF  Lampada ingresso ON 
-	/i0_e1 -> Lampada veranda ON   Lampada ingresso OFF 
+	/blc1 -> Lampada veranda ON  \n /blc0 -> Lampada veranda OFF
+	/ent1 -> Lampada ingresso ON  \n /ent0 -> Lampada ingresso OFF
 	/1bth -> Lampade Lina ON \n /0bth -> Lampade Lina OFF
 	/rasp -> RASPI webServer
 	/myip	-> Indirizzo di rete attuale
@@ -121,20 +121,29 @@ elseif(strpos($text,"bth0")){
 	$response = file_get_contents("http://dario95.ddns.net:28082/gpio3/0");
 }
 //------------
-//<-- Accensione rele su wemos232	Cambiata la porta del router dopo tentativi da 8081  31/10/2017
-elseif($text=="/i1_e0"){
-	$response = file_get_contents("http://dario95.ddns.net:28081/rele/2");
+//<-- Accensione rele1 su ESPlogger	Cambiata la porta del router dopo tentativi da 8081  31/10/2017
+elseif(strpos($text,"blc1")){
+	$response = file_get_contents("http://dario95.ddns.net:28081?pin=10");
 }
-elseif($text=="/i0_e1"){
-	$response = file_get_contents("http://dario95.ddns.net:28081/rele/1");
+//<-- Spegnimento rele1 su ESPlogger	Cambiata la porta del router dopo tentativi da 8081  31/10/2017
+elseif(strpos($text,"blc0")){
+	$response = file_get_contents("http://dario95.ddns.net:28081?pin=11");
 }
-//<-- Accensione rele2 + rele1 su wemos232	
+//<-- Accensione rele2 su ESPlogger	Cambiata la porta del router dopo tentativi da 8081  31/10/2017
+elseif(strpos($text,"ent1")){
+	$response = file_get_contents("http://dario95.ddns.net:28081?pin=12");
+}
+//<-- Spegnimento rele2 su ESPlogger	Cambiata la porta del router dopo tentativi da 8081  31/10/2017
+elseif(strpos($text,"ent0")){
+	$response = file_get_contents("http://dario95.ddns.net:28081?pin=13");
+}
+//<-- Accensione rele2 + rele1 su ESPlogger	
 elseif(strpos($text,"1bth")){
-	$response = file_get_contents("http://dario95.ddns.net:28081/rele/3");
+	$response = file_get_contents("http://dario95.ddns.net:28081?pin=30");
 }
-//<-- Spegnimento rele2 + rele1 su wemos232	
+//<-- Spegnimento rele2 + rele1 su ESPlogger	
 elseif(strpos($text,"0bth")){
-	$response = file_get_contents("http://dario95.ddns.net:28081/rele/0");
+	$response = file_get_contents("http://dario95.ddns.net:28081?pin=31");
 }
 //<-- Manda a video la risposta completa
 elseif($text=="/inf"){
@@ -171,7 +180,7 @@ $parameters["method"] = "sendMessage";
 $parameters["reply_markup"] = '{ "keyboard": [
 	["/bed","/din","/ktc","/lvg","/blr","/hpg","/off"],
 	["/fsh1","/fsh0","/lob1","/lob0","/bth1","/bth0"],
-	["/i1_e0","/i0_e1","/1bth","/0bth"],
+	["/blc1","/blc0","/ent1","/ent0","/1bth","/0bth"],
 	["/rasp","/000","/altr","/inf","/myip"]], 
 	"resize_keyboard": true, 
 	"one_time_keyboard": false}';
