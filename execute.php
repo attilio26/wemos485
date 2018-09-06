@@ -56,6 +56,7 @@ if(strpos($text, "/start") === 0 || $text=="/inf" || $text == "help"){
 	/fsh1 -> Lampada Pesci ON  \n /fsh0 -> Lampada Pesci OFF
 	/lob1 -> Lampada Atrio ON  \n /lob0  -> Lampada Atrio OFF
 	/bth1 -> Lamp garden ON \n /bth0 -> Lamp garden OFF \n
+	/lina     -> DS18B20, DHT11, Ledcounter, Caleffi StatoRele
 	/i1_e0 -> Lampada veranda OFF  Lampada ingresso ON 
 	/i0_e1 -> Lampada veranda ON   Lampada ingresso OFF 
 	/1bth -> Lampade Lina ON \n /0bth -> Lampade Lina OFF
@@ -122,6 +123,10 @@ elseif(strpos($text,"bth0")){
 }
 //------------
 //<-- Accensione rele su wemos232	Cambiata la porta del router dopo tentativi da 8081  31/10/2017
+//<-- Lettura parametri da wemos232
+elseif($text=="/lina"){
+	$response = file_get_contents("http://dario95.ddns.net:28081/lina");
+}
 elseif($text=="/i1_e0"){
 	$response = file_get_contents("http://dario95.ddns.net:28081/rele/2");
 }
@@ -171,7 +176,7 @@ $parameters["method"] = "sendMessage";
 $parameters["reply_markup"] = '{ "keyboard": [
 	["/bed","/din","/ktc","/lvg","/blr","/hpg","/off"],
 	["/fsh1","/fsh0","/lob1","/lob0","/bth1","/bth0"],
-	["/i1_e0","/i0_e1","/1bth","/0bth"],
+	["/lina","/i1_e0","/i0_e1","/1bth","/0bth"],
 	["/rasp","/000","/altr","/inf","/myip"]], 
 	"resize_keyboard": true, 
 	"one_time_keyboard": false}';
