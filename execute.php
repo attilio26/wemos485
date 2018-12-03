@@ -1,5 +1,5 @@
 <?php
-//28-11-2018
+//03-12-2018
 //started on 01-06-2017
 // La app di Heroku si puo richiamare da browser con
 //			https://wemos485.herokuapp.com/
@@ -177,7 +177,7 @@ $parameters["reply_markup"] = '{ "keyboard": [
 	["/bed","/din","/ktc","/lvg","/blr","/hpg","/off"],
 	["/fsh1","/fsh0","/lob1","/lob0","/bth1","/bth0"],
 	["/lina","/i1_e0","/i0_e1","/1bth","/0bth"],
-	["/rasp","/altr","/myip"]], 
+	["/rasp","/altr"]], 
 	"resize_keyboard": true, 
 	"one_time_keyboard": false}';
 // converto e stampo l'array JSON sulla response
