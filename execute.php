@@ -157,11 +157,11 @@ elseif(strpos($text,"000")){
 }
 //<-- collegamento a web hosting attilio26.altervista.org
 elseif(strpos($text,"altr1")){
-	$response = file_get_contents("http://attilio26.altervista.org/avIndex.php");
+	$response = file_get_contents("http://dario95.ddns.net:9080/link_altervista.html");
 }
 //<-- collegamento a web hosting attilio26.altervista.org
 elseif(strpos($text,"altr2")){
-	$response = file_get_contents("http://attilio26.altervista.org/whindex.php");
+	$response = file_get_contents("http://dario95.ddns.net:9080/link000.html");
 }
 //<-- indirizzo di rete attuale
 elseif(strpos($text,"/myip")){
