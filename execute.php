@@ -1,5 +1,5 @@
 <?php
-//18-12-2018
+//03-12-2018
 //started on 01-06-2017
 // La app di Heroku si puo richiamare da browser con
 //			https://wemos485.herokuapp.com/
@@ -156,12 +156,8 @@ elseif(strpos($text,"000")){
 	$response = file_get_contents("http://dario95.ddns.net:9080/link000.html");
 }
 //<-- collegamento a web hosting attilio26.altervista.org
-elseif(strpos($text,"altr1")){
+elseif(strpos($text,"altr")){
 	$response = file_get_contents("http://dario95.ddns.net:9080/link_altervista.html");
-}
-//<-- collegamento a web hosting attilio26.altervista.org
-elseif(strpos($text,"altr2")){
-	$response = file_get_contents("http://dario95.ddns.net:9080/link000.html");
 }
 //<-- indirizzo di rete attuale
 elseif(strpos($text,"/myip")){
@@ -181,7 +177,7 @@ $parameters["reply_markup"] = '{ "keyboard": [
 	["/bed","/din","/ktc","/lvg","/blr","/hpg","/off"],
 	["/fsh1","/fsh0","/lob1","/lob0","/bth1","/bth0"],
 	["/lina","/i1_e0","/i0_e1","/1bth","/0bth"],
-	["/rasp","/altr1","/altr2"]], 
+	["/rasp","/altr"]], 
 	"resize_keyboard": true, 
 	"one_time_keyboard": false}';
 // converto e stampo l'array JSON sulla response
