@@ -151,17 +151,13 @@ elseif($text=="/inf"){
 elseif(strpos($text,"rasp")){
 	$response = file_get_contents("http://dario95.ddns.net:9080/link.html");
 }
-//<-- collegamento a web hosting farinemill.000webhostapp.com
-elseif(strpos($text,"000")){
-	$response = file_get_contents("http://dario95.ddns.net:9080/link000.html");
+//<-- collegamento a web hosting attilio26.altervista.org (fa riferimento a un file contenuto in Raspberry Wheezy)
+elseif(strpos($text,"altr1")){
+	$response = file_get_contents("http://dario95.ddns.net:9080/link_altervista1.html");
 }
-//<-- collegamento a web hosting attilio26.altervista.org
-elseif(strpos($text,"altr")){
-	$response = file_get_contents("http://dario95.ddns.net:9080/link_altervista.html");
-}
-//<-- indirizzo di rete attuale
-elseif(strpos($text,"/myip")){
-	$response = file_get_contents("http://ip.42.pl");
+//<-- collegamento a web hosting attilio26.altervista.org (fa riferimento a un file contenuto in Raspberry Wheezy)
+elseif(strpos($text,"altr2")){
+	$response = file_get_contents("http://dario95.ddns.net:9080/link_altervista2.html");
 }
 else
 {
@@ -177,7 +173,7 @@ $parameters["reply_markup"] = '{ "keyboard": [
 	["/bed","/din","/ktc","/lvg","/blr","/hpg","/off"],
 	["/fsh1","/fsh0","/lob1","/lob0","/bth1","/bth0"],
 	["/lina","/i1_e0","/i0_e1","/1bth","/0bth"],
-	["/rasp","/altr"]], 
+	["/rasp","/altr1","/altr2"]], 
 	"resize_keyboard": true, 
 	"one_time_keyboard": false}';
 // converto e stampo l'array JSON sulla response
