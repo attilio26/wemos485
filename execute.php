@@ -1,5 +1,5 @@
 <?php
-//03-12-2018
+//01-03-2019
 //started on 01-06-2017
 // La app di Heroku si puo richiamare da browser con
 //			https://wemos485.herokuapp.com/
@@ -64,6 +64,7 @@ if(strpos($text, "/start") === 0 || $text=="/inf" || $text == "help"){
 	/myip	-> Indirizzo di rete attuale
 	/000  -> farinemill web site
 	/altr -> altervista website
+	/ts		-> ThingSpeak canale 119177
 	/inf -> parametri del messaggio \n
 	chatId ".$chatId. "\n messId ".$messageId. "\n user ".$username. "\n lastname ".$lastname. "\n firstname ".$firstname ;		
 }
@@ -159,6 +160,10 @@ elseif(strpos($text,"altr1")){
 elseif(strpos($text,"altr2")){
 	$response = file_get_contents("http://dario95.ddns.net:9080/link_altervista2.html");
 }
+//<-- collegamento a ThingSpeak canale 119177 (fa riferimento a un file contenuto in Raspberry Wheezy)
+elseif(strpos($text,"ts")){
+	$response = file_get_contents("http://dario95.ddns.net:9080/linkTS119177.html");
+}
 else
 {
 	$response = "Unknown command!";			//<---Capita quando i comandi contengono lettere maiuscole
@@ -173,7 +178,7 @@ $parameters["reply_markup"] = '{ "keyboard": [
 	["/bed","/din","/ktc","/lvg","/blr","/hpg","/off"],
 	["/fsh1","/fsh0","/lob1","/lob0","/bth1","/bth0"],
 	["/lina","/i1_e0","/i0_e1","/1bth","/0bth"],
-	["/rasp","/altr1","/altr2"]], 
+	["/rasp","/altr1","/altr2","/ts"]], 
 	"resize_keyboard": true, 
 	"one_time_keyboard": false}';
 // converto e stampo l'array JSON sulla response
